@@ -4,19 +4,12 @@ import './index.css';
 
 
 
-class Square extends React.Component {
-
-  render() {
-    return (
-      <button 
-        className="square" 
-        onClick={() => this.props.onClick()} //using () => helps us avoid stuff like onClick={function() {do something}}
-      >
-        {this.props.value}
-      </button>
-    );
-  }
-
+function Square(props){
+  return(
+    <button className='square' onClick={props.onClick}>
+      {props.value}
+    </button>
+  )
 }
   
 
@@ -25,15 +18,28 @@ class Board extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = {
+    /*state is an object. Objects in javascript are like dictionaries in python. In this case, state is an object that belongs to the board
+    class*/
+    this.state = {  
       squares: Array(9).fill(null),
+      xIsNext: true,
     };
   }
 
   handleClick(i){
     const squares = this.state.squares.slice(); //slice is used to copy that array. Why didn't we just modify the existing array? Below this func
-    squares[i] = 'X';
-    this.setState({squares: squares}) //update the squares array in the board
+    
+    if(calculateWinner(squares) || squares[i]){ //return early by ignoring a click if someone has won the game or if a Square was already clicked
+      return;
+    }
+    
+    squares[i] = (this.state.xIsNext ? 'X' : 'O');
+    
+    this.setState({
+      squares: squares, //update the squares array in the board
+      xIsNext: !this.state.xIsNext,
+    })
+
   }
   /*
   2 ways to change data:
@@ -61,13 +67,21 @@ class Board extends React.Component {
         /*In summary, the line below makes the value of the ith square equal to its corresponding value in the squares array, which 
         gets updated as the squares are clicked using the handleClick function*/
         value={this.state.squares[i]} 
-        onClick = {() => this.handleClick(i)}
+        onClick = {() => this.handleClick(i)} //using () => helps us avoid stuff like onClick={function() {do something}}
       />
     );
   }
 
   render() {
-    const status = 'Next player: X';
+
+    const winner = calculateWinner(this.state.squares);
+    let status;
+    if(winner){
+      status = 'Winner: ' + winner;
+    }
+    else{
+      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');  //This is basically a simplified if else statement
+    }
 
     return (
       <div>
@@ -92,6 +106,32 @@ class Board extends React.Component {
       </div>
     );
   }
+}
+
+
+
+function calculateWinner(squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+
+  }
+
+  return null;
 }
 
 
