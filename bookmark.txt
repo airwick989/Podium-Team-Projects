@@ -1,2 +1,3 @@
 Create your first app
-	- Pre rendering and Data fetching
+	- Dynamic Routing
+		- Render Markdown
