@@ -25,6 +25,11 @@ export default function Home({ allPostsData }) {
       </Head>
       <section className={utilStyles.headingMd}>
         
+        <p>Hello there, I'm <b>Ridwan</b>. Bing bong bing bing bong.</p>
+        <p>
+          (This is a sample website)
+        </p>
+
         <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
           <h2 className={utilStyles.headingLg}>Blog</h2>
           <ul className={utilStyles.list}>
@@ -42,10 +47,6 @@ export default function Home({ allPostsData }) {
           </ul>
         </section>
 
-        <p>Hello there, I'm <b>Ridwan</b>. Bing bong bing bing bong.</p>
-        <p>
-          (This is a sample website)
-        </p>
       </section>
     </Layout>
   );

@@ -50,3 +50,8 @@ margin: 0 0 1.25rem;
 .lightText {
 color: #666;
 }
+
+#date {
+    color: #666; 
+    font-weight: lighter;
+}
