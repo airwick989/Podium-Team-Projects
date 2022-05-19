@@ -1,8 +1,8 @@
 import { parseISO, format } from 'date-fns';
 
-export default function Date({ dateString }) {
+export default function Date({ dateString } : {dateString: string}) {
   if(typeof dateString == 'undefined'){
-    return '*undefined date*'
+    return <time>'*undefined date*'</time>
   }
   else{
     const date = parseISO(dateString);
